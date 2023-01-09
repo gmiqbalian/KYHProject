@@ -1,4 +1,5 @@
-﻿using KYHProject.UI;
+﻿using KYHProject.Data;
+using KYHProject.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace KYHProject
     {
         public void Run()
         {
+            var builder = new Builder();
+            var dbContext = builder.BuildApp();            
+
             while (true)
             {
                 var mainSel = Menu.MainMenu();
