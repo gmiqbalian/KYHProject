@@ -21,7 +21,7 @@ namespace KYHProject.Models
             get { return GetArea(); } 
             set { } 
         }
-        public double Circumference 
+        public double Perimeter 
         { 
             get { return GetPerimeter(); } 
             set { } 

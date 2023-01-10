@@ -21,12 +21,12 @@ namespace KYHProject
                 var mainSel = Menu.MainMenu();
                 if (mainSel == 0) return;
                 int subSel = 0;
-                ResultController controller = null;
+                ShapeController controller = null;
 
                 switch (mainSel)
                 {
                     case 1:
-                        controller = new ResultController(dbContext);
+                        controller = new ShapeController(dbContext);
                         subSel = Menu.ShapeMenu();
                         break;
                     case 2:
@@ -42,6 +42,18 @@ namespace KYHProject
                 {
                     case 1:
                         controller.Create();
+                        break;
+                    case 2:
+                        controller.Update();
+                        break;
+                    case 3:
+                        controller.Show();
+                        System.Threading.Thread.Sleep(3000);
+                        break;
+                    case 4:
+                        controller.Delete();
+                        break;
+                    case 0:
                         break;
                     default:
                         break;

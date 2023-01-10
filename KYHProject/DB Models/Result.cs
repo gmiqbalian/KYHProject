@@ -13,8 +13,11 @@ namespace KYHProject.Models
     {
         public int ResultId { get; set; }
         public DateTime CreatedOn { get; set; }
-        public Shape? Shape { get; set; }        
+        public int ShapeId { get; set; }
+        public Shape? Shape { get; set; }
+        public int CalculatorId { get; set; }
         public Calculator? Calculator { get; set; }
+        public int GameId { get; set; }
         public Game? Game { get; set; }
 
     }
