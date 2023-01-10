@@ -1,4 +1,4 @@
-﻿namespace KYHProject.Models
+﻿namespace KYHProject.Enums
 {
     public enum EnumGameResult
     {

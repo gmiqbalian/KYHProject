@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using KYHProject.App_Models;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -13,7 +14,7 @@ namespace KYHProject.Models
         public int ResultId { get; set; }
         public DateTime CreatedOn { get; set; }
         public Shape? Shape { get; set; }        
-        public Calculator? Calcultor { get; set; }
+        public Calculator? Calculator { get; set; }
         public Game? Game { get; set; }
 
     }

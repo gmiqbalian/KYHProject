@@ -1,4 +1,5 @@
-﻿using KYHProject.Data;
+﻿using KYHProject.Controllers;
+using KYHProject.Data;
 using KYHProject.UI;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,13 @@ namespace KYHProject
             {
                 var mainSel = Menu.MainMenu();
                 if (mainSel == 0) return;
-                int subSel;
+                int subSel = 0;
+                ResultController controller = null;
 
                 switch (mainSel)
                 {
                     case 1:
+                        controller = new ResultController(dbContext);
                         subSel = Menu.ShapeMenu();
                         break;
                     case 2:
@@ -31,6 +34,14 @@ namespace KYHProject
                         break;
                     case 3:
                         subSel = Menu.GameMenu();
+                        break;
+                    default:
+                        break;
+                }
+                switch (subSel)
+                {
+                    case 1:
+                        controller.Create();
                         break;
                     default:
                         break;
