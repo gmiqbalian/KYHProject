@@ -13,7 +13,7 @@ namespace KYHProject
         public void Run()
         {
             var builder = new Builder();
-            var dbContext = builder.BuildApp();            
+            var dbContext = builder.BuildApp();
 
             while (true)
             {
@@ -31,10 +31,10 @@ namespace KYHProject
                         break;
                     case 3:
                         subSel = Menu.GameMenu();
-                        break;                    
+                        break;
                     default:
                         break;
-                }                
+                }
             }
 
         }

@@ -27,10 +27,10 @@ namespace KYHProject.UI
             Console.Clear();
             Console.WriteLine("\nShapes\n");
 
-            Console.WriteLine("1. Create a Shape");
-            Console.WriteLine("2. Edit a Shape");
-            Console.WriteLine("3. Show all Shapes");
-            Console.WriteLine("4. Delete a Shape");
+            Console.WriteLine("1. Calculate Area and Circumference of a Shape");
+            Console.WriteLine("2. Edit current Shape calculations");
+            Console.WriteLine("3. Show all Shape calculations");
+            Console.WriteLine("4. Delete a Shape calculation");
             Console.WriteLine("0. Go to Main Menu");
 
             return GetMenuSel(4);
@@ -66,10 +66,10 @@ namespace KYHProject.UI
 
             while (sel < 0 || sel > maxRange)
             {
-                Console.Write("\nPlease enter within given range:");
+                Console.Write("\nPlease enter within given range: ");
                 sel = Input.GetInt();
             }
-            return sel;            
+            return sel;           
         }
     }
 }

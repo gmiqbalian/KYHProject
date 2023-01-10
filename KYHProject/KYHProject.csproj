@@ -24,4 +24,14 @@
     <ProjectReference Include="..\InputClassLibrary\InputClassLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Shape Controllers\" />
+  </ItemGroup>
+
 </Project>

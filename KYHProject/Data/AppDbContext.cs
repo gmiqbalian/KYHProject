@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KYHProject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,23 @@ namespace KYHProject.Data
 {
     public class AppDbContext: DbContext
     {
+        public DbSet<Result> Results { get; set; }
+        public DbSet<Shape> Shapes { get; set; }
+        public DbSet<Calculator> Calculators { get; set; }
+        public DbSet<Game> Games { get; set; }
+
         public AppDbContext()
         {
         }
-        public AppDbContext(DbContextOptions<DbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\\MSSQLLocalDB;Database=KYHProjectDb;Trusted_Connection=True;TrustServerCertificate=true;");
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=KYHProjectDb;Trusted_Connection=True;TrustServerCertificate=true;");
             }
-        }
+        }        
     }
 }
