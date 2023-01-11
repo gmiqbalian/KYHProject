@@ -21,15 +21,16 @@ namespace KYHProject
                 var mainSel = Menu.MainMenu();
                 if (mainSel == 0) return;
                 int subSel = 0;
-                ShapeController controller = null;
+                CalculatorController controller = null;
 
                 switch (mainSel)
                 {
                     case 1:
-                        controller = new ShapeController(dbContext);
+                        controller = new CalculatorController(dbContext);
                         subSel = Menu.ShapeMenu();
                         break;
                     case 2:
+                        controller = new CalculatorController(dbContext);
                         subSel = Menu.CalculatorMenu();
                         break;
                     case 3:
