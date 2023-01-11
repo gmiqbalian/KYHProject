@@ -37,6 +37,19 @@
             }
             return input;
         }
+        public static int GetSelFromRange(int maxRange)
+        {
+            Console.Write("\nEnter from given options: ");
+            var sel = Input.GetInt();
+
+            while (sel < 0 || sel > maxRange)
+            {
+                Console.Write("\nPlease enter within given range: ");
+                sel = Input.GetInt();
+            }
+            return sel;
+        }
+
         //public static char GetOperator()
         //{
         //    char.TryParse()

@@ -20,7 +20,7 @@ namespace KYHProject.UI
             Console.WriteLine("3. Game");
             Console.WriteLine("0. Exit");
 
-            return GetMenuSel(3);
+            return Input.GetSelFromRange(3);
         }
         public static int ShapeMenu()
         {
@@ -33,7 +33,7 @@ namespace KYHProject.UI
             Console.WriteLine("4. Delete a Shape calculation");
             Console.WriteLine("0. Go to Main Menu");
 
-            return GetMenuSel(4);
+            return Input.GetSelFromRange(4);
         }
         public static int CalculatorMenu()
         {
@@ -46,7 +46,7 @@ namespace KYHProject.UI
             Console.WriteLine("4. Delete previous calculation");
             Console.WriteLine("0. Go to Main Menu");
 
-            return GetMenuSel(4);
+            return Input.GetSelFromRange(4);
         }
         public static int GameMenu()
         {
@@ -57,19 +57,8 @@ namespace KYHProject.UI
             Console.WriteLine("2. Show previous statistics");
             Console.WriteLine("0. Go to Main Menu");
 
-            return GetMenuSel(2);
+            return Input.GetSelFromRange(2);
         }
-        private static int GetMenuSel(int maxRange)
-        {
-            Console.Write("\nEnter from given options: ");            
-            var sel = Input.GetInt();
-
-            while (sel < 0 || sel > maxRange)
-            {
-                Console.Write("\nPlease enter within given range: ");
-                sel = Input.GetInt();
-            }
-            return sel;           
-        }
+        
     }
 }
