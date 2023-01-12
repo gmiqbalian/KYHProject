@@ -2,6 +2,7 @@
 using InputClassLibrary;
 using KYHProject.Data;
 using KYHProject.Models;
+using KYHProject.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,43 +11,53 @@ using System.Threading.Tasks;
 
 namespace KYHProject.Controllers
 {
-    public class CalculatorController
+    public class CalculatorController : IController
     {
         private AppDbContext _dbContext;
+        private CalStrategy _calStrategy;
         public CalculatorController(AppDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext;            
         }
         public void Create()
         {
-            var newCalculator = new Calculator();
-
-            newCalculator.CreatedOn = DateTime.Now;
+            var newCalculation = new Calculation();
+            newCalculation.CreatedOn = DateTime.Now;
 
             Console.Write("\nEnter number 1: ");
-            newCalculator.Number1 = Input.GetDecimal();
+            newCalculation.a = Input.GetDecimal();
 
-            Console.Write("\nEnter operator (+, -, *, /, √, %): ");
-            newCalculator.Operator = Convert.ToChar(Console.ReadLine());
+            Console.Write("\nChoose an operator\n(+ , - , / , * , %): ");
+            newCalculation.Operator = Convert.ToChar(Console.ReadLine());
 
             Console.Write("\nEnter number 2: ");
-            newCalculator.Number2 = Input.GetDecimal();
+            newCalculation.b = Input.GetDecimal();
 
-            Console.WriteLine(newCalculator.Result);
+            _calStrategy = new CalStrategy(newCalculation.a, newCalculation.b);
+            GetCalculationStrategy(newCalculation);
 
-            _dbContext.Calculators.Add(newCalculator);
+            Console.WriteLine($"{newCalculation.a} " +
+                $"{newCalculation.Operator} " +
+                $"{newCalculation.b} " +
+                $"= {newCalculation.Result}");
+
+            _dbContext.Calculators.Add(newCalculation);
             _dbContext.SaveChanges();
         }
+
         public void Show()
         {
             var calList = _dbContext.Calculators.ToList();
-            var table = new ConsoleTable("Id", "Number1", "Operator", "Number2", "Result");
-            foreach (var c in calList)
-            {
-                table.AddRow(c.CalculatorId, c.Number1, c.Operator, c.Number2, c.Result);
-            }
+            var table = new ConsoleTable("Id", "Value a", "Operator", "Value b", "Result");
 
-            Console.WriteLine(table);            
+            foreach (var c in calList)            
+                table.AddRow(c.CalculationId, 
+                    c.a, 
+                    c.Operator, 
+                    c.b, 
+                    c.Result);
+
+            Console.WriteLine(table);
         }
         public void Update()
         {
@@ -56,18 +67,24 @@ namespace KYHProject.Controllers
             var calToUpdateId = Input.GetInt();
 
             var calToUpdate = _dbContext.Calculators.
-                First(c => c.CalculatorId == calToUpdateId);
+                First(c => c.CalculationId == calToUpdateId);
 
             Console.Write("\nEnter number 1: ");
-            calToUpdate.Number1 = Input.GetDecimal();
+            calToUpdate.a = Input.GetDecimal();
             
             Console.Write("\nEnter operator (+, -, *, /, √, %): ");
             calToUpdate.Operator = Convert.ToChar(Console.ReadLine());
-            
-            Console.Write("\nEnter number 2: ");
-            calToUpdate.Number2 = Input.GetDecimal();
+            _calStrategy = new CalStrategy(calToUpdate.a, calToUpdate.b);
+            GetCalculationStrategy(calToUpdate);
 
-            Console.WriteLine(calToUpdate.Result);
+            Console.Write("\nEnter number 2: ");
+            calToUpdate.b = Input.GetDecimal();
+
+            Console.WriteLine($"{calToUpdate.a} " +
+                $"{calToUpdate.Operator} " +
+                $"{calToUpdate.b} " +
+                $"= {calToUpdate.Result}");
+            
         }
         public void Delete()
         {
@@ -77,10 +94,38 @@ namespace KYHProject.Controllers
             var calToDeleteId = Input.GetInt();
 
             var calToDelete = _dbContext.Calculators.
-                First(c=> c.CalculatorId == calToDeleteId);
+                First(c=> c.CalculationId == calToDeleteId);
 
             _dbContext.Calculators.Remove(calToDelete);
             _dbContext.SaveChanges();
+        }
+        private void GetCalculationStrategy(Calculation newCalculation)
+        {
+            switch (newCalculation.Operator)
+            {
+                case '+':
+                    newCalculation.Result
+                        = _calStrategy.Addition();
+                    break;
+                case '-':
+                    newCalculation.Result
+                        = _calStrategy.Subtraction();
+                    break;
+                case '/':
+                    newCalculation.Result
+                        = _calStrategy.Division();
+                    break;
+                case '*':
+                    newCalculation.Result
+                        = _calStrategy.Multiplication();
+                    break;
+                case '%':
+                    newCalculation.Result
+                        = _calStrategy.Modulus();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

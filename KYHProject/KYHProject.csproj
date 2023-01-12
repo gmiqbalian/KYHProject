@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InputClassLibrary\InputClassLibrary.csproj" />
+    <ProjectReference Include="..\InputClassLibrary\InputLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,32 +8,30 @@ using System.Threading.Tasks;
 
 namespace KYHProject.Models
 {
-    public class Shape : IShape
+    public class Shape
     {
         public int ShapeId { get; set; }
-        public double Base { get; set; }
-        public double Height { get; set; }
-        public double ValueA { get; set; }
-        public double ValueC { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public decimal Base { get; set; }
+        public decimal Height { get; set; }
+        public decimal ValueA { get; set; }
+        public decimal ValueC { get; set; }
         public EnumShapeType Type { get; set; }
-        public double Area 
+        public decimal Area 
         { 
             get { return GetArea(); } 
             set { } 
         }
-        public double Perimeter 
+        public decimal Perimeter 
         { 
             get { return GetPerimeter(); } 
             set { } 
         }
-        public List<Result> Results { get; set; } = new List<Result> ();
-
-        public virtual double GetArea()
+        public virtual decimal GetArea()
         {
             return Base * Height;
         }
-
-        public virtual double GetPerimeter()
+        public virtual decimal GetPerimeter()
         {
             return Base * 2 + Height * 2;            
         }

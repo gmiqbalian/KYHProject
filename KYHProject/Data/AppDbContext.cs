@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 namespace KYHProject.Data
 {
     public class AppDbContext: DbContext
-    {
-        public DbSet<Result> Results { get; set; }
+    {   
         public DbSet<Shape> Shapes { get; set; }
-        public DbSet<Calculator> Calculators { get; set; }
+        public DbSet<Calculation> Calculators { get; set; }
         public DbSet<Game> Games { get; set; }
 
         public AppDbContext()

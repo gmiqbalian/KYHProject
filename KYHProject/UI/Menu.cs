@@ -16,7 +16,7 @@ namespace KYHProject.UI
             Console.WriteLine("\nMain Menu\n");
 
             Console.WriteLine("1. Shapes");
-            Console.WriteLine("2. Calculator");
+            Console.WriteLine("2. Calculation");
             Console.WriteLine("3. Game");
             Console.WriteLine("0. Exit");
 
@@ -35,11 +35,11 @@ namespace KYHProject.UI
 
             return Input.GetSelFromRange(4);
         }
+        
         public static int CalculatorMenu()
         {
             Console.Clear();
-            Console.WriteLine("\nCalculator\n");
-
+            Console.WriteLine("\nCalculation\n");
             Console.WriteLine("1. Make a calculation");
             Console.WriteLine("2. Edit previous calculation");
             Console.WriteLine("3. Show previous calculations");

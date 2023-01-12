@@ -11,21 +11,21 @@ namespace KYHProject.App_Models
     public class ShapeFactory
     {
         private Shape _shape {get; set;}
-        public Shape GetShape(EnumShapeType shapeType)
+        public Shape GetShape(int shapeType)
         {
             switch (shapeType)
             {
-                case EnumShapeType.Rectangle:
-                    _shape = new Rectangle();                
+                case 1:
+                    _shape = new Rectangle();                    
                     break;
-                case EnumShapeType.Parallelogram:
-                    _shape = new Parallelogram();
+                case 2:
+                    _shape = new Parallelogram();                    
                     break;
-                case EnumShapeType.Triangle:
-                    _shape = new Triangle();
+                case 3:
+                    _shape = new Triangle();                    
                     break;
-                case EnumShapeType.Rhombus:
-                    _shape = new Rhombus();
+                case 4:
+                    _shape = new Rhombus();                    
                     break;
                 default:
                     break;

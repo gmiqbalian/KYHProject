@@ -13,7 +13,7 @@ using ConsoleTables;
 
 namespace KYHProject.Controllers
 {
-    public class ShapeController
+    public class ShapeController : IController
     {
         private AppDbContext _dbContext;
         private ShapeFactory _shapeFactory;
@@ -23,52 +23,58 @@ namespace KYHProject.Controllers
             _dbContext = dbContext;
             _shapeFactory = new ShapeFactory();
         }
-        public Shape Create()
-        {
-
-            Console.Write("\nEnter Shape Type: ");
-            Enum.TryParse(Console.ReadLine(), out EnumShapeType Type);
-            var newShape = _shapeFactory.GetShape(Type);
-            newShape.Type = Type;
+        public void Create()
+        {            
+            Console.Write("\nChoose Shape Type\n");
             
-            Console.Write("\nEnter shape base (b) value in cm: ");
-            newShape.Base = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("1. Rectangle");
+            Console.WriteLine("2. Parallelogram");
+            Console.WriteLine("3. Triangle");
+            Console.WriteLine("4. Rhombus");
+            Console.WriteLine("0. Go to Main Menu");
+                                   
+            var sel = Input.GetSelFromRange(4);
+            
+            var newShape = _shapeFactory.GetShape(sel);
+            newShape.CreatedOn = DateTime.Now;
 
+            newShape.Type = (EnumShapeType)sel;
+
+            Console.Write("\nEnter shape base (b) value in cm: ");
+            newShape.Base = Input.GetDecimal();
+                        
             Console.Write("\nEnter shape height (h) value in cm: ");
-            newShape.Height = Convert.ToDouble(Console.ReadLine());
+            newShape.Height = Input.GetDecimal();
             
             if(newShape.Type == EnumShapeType.Parallelogram ||
                 newShape.Type == EnumShapeType.Triangle)
             {
                 Console.Write("\nEnter value of side (a) value in cm: ");
-                newShape.ValueA = Convert.ToDouble(Console.ReadLine());                
+                newShape.ValueA = Input.GetDecimal();
             }
             if (newShape.Type == EnumShapeType.Triangle) 
             {
                 Console.Write("\nEnter value of side (c) value in cm: ");
-                newShape.ValueC = Convert.ToDouble(Console.ReadLine());
+                newShape.ValueC = Input.GetDecimal();
             }
 
             _dbContext.Shapes.Add(newShape);
-            _dbContext.SaveChanges();
-
-            return newShape;
+            _dbContext.SaveChanges();           
         }
         public void Show()
         {
-            var shapesList = _dbContext.Results.
-                Include(r => r.Shape).
+            var shapesList = _dbContext.Shapes.
                 ToList();
 
-            var table = new ConsoleTable("Result ID", "Date", "Shape ID", "Type", "Area", "Perimeter");            
-            foreach (var r in shapesList)
+            var table = new ConsoleTable("Shape ID", "Date", "Type", "Area", "Perimeter");            
+            foreach (var s in shapesList)
             {
-                table.AddRow(r.ResultId, 
-                    r.CreatedOn.ToShortDateString(), 
-                    r.Shape.ShapeId, 
-                    r.Shape.Type, 
-                    r.Shape.Area, 
-                    r.Shape.Perimeter);
+                table.AddRow(
+                    s.ShapeId, 
+                    s.CreatedOn,
+                    s.Type, 
+                    s.Area, 
+                    s.Perimeter);
             }
 
             Console.WriteLine(table);
@@ -89,21 +95,21 @@ namespace KYHProject.Controllers
             shapeToUpdate.Type = type;
 
             Console.Write("\nEnter shape base (b) value in cm: ");
-            shapeToUpdate.Base = Convert.ToDouble(Console.ReadLine());
+            shapeToUpdate.Base = Input.GetDecimal();
 
             Console.Write("\nEnter shape height (h) value in cm: ");
-            shapeToUpdate.Height = Convert.ToDouble(Console.ReadLine());
+            shapeToUpdate.Height = Input.GetDecimal();
 
             if (shapeToUpdate.Type == EnumShapeType.Parallelogram ||
                 shapeToUpdate.Type == EnumShapeType.Triangle)
             {
                 Console.Write("\nEnter value of side (a) value in cm: ");
-                shapeToUpdate.ValueA = Convert.ToDouble(Console.ReadLine());
+                shapeToUpdate.ValueA = Input.GetDecimal();
             }
             if (shapeToUpdate.Type == EnumShapeType.Triangle)
             {
                 Console.Write("\nEnter value of side (c) value in cm: ");
-                shapeToUpdate.ValueC = Convert.ToDouble(Console.ReadLine());
+                shapeToUpdate.ValueC = Input.GetDecimal();
             }
         }
         public void Delete()

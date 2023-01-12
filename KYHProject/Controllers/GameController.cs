@@ -13,42 +13,27 @@ namespace KYHProject.Controllers
     public class GameController
     {
         private AppDbContext _dbContext;
+        private List<string> _choices;
         public GameController(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+            _choices = new List<string> { "Rock", "Paper", "Scissors" };
         }
         public void Play()
         {
             var newGame = new Game();
             newGame.PlayedOn = DateTime.Now;
 
-            var random = new Random();
-
-            var choices = new List<string> { "Rock", "Paper", "Scissors" };
-            int index = 1;
-            Console.WriteLine("\nGame Choices\n");
-            foreach (var choice in choices)
-            {
-                Console.WriteLine($"{index}-{choice}");
-                index++;
-            }
+            ShowChoices();
 
             int userChoice = Input.GetSelFromRange(3) - 1;
-            Console.WriteLine($"\nYou choose: {choices[userChoice]}");
+            Console.WriteLine($"\nYou chose: {_choices[userChoice]}");
 
+            var random = new Random();
             int computerChoice = random.Next(3);
-            Console.WriteLine($"\nComputer choose: {choices[computerChoice]}");
+            Console.WriteLine($"\nComputer chose: {_choices[computerChoice]}");
 
-            if (choices[userChoice] == choices[0] && choices[computerChoice] == choices[2])
-                newGame.Result = EnumGameResult.Win;
-            else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[1])
-                newGame.Result = EnumGameResult.Win;
-            else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[0])
-                newGame.Result = EnumGameResult.Win;
-            else if (choices[userChoice] == choices[computerChoice])
-                newGame.Result = EnumGameResult.Draw;
-            else
-                newGame.Result = EnumGameResult.Loose;
+            newGame.Result = CheckResult(_choices, userChoice, computerChoice);
 
             Console.WriteLine($"\nGame Result: {newGame.Result}");
             
@@ -68,6 +53,34 @@ namespace KYHProject.Controllers
             System.Threading.Thread.Sleep(3000);
 
             _dbContext.SaveChanges();
-        }     
+        }
+        private void ShowChoices()
+        {
+            int index = 1;
+            Console.WriteLine("\nGame Choices\n");
+            foreach (var choice in _choices)
+            {
+                Console.WriteLine($"{index}-{choice}");
+                index++;
+            }
+        }
+        private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice)
+        {
+            
+            EnumGameResult gameResult;
+
+            if (choices[userChoice] == choices[0] && choices[computerChoice] == choices[2])
+                gameResult = EnumGameResult.Win;
+            else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[1])
+                gameResult = EnumGameResult.Win;
+            else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[0])
+                gameResult = EnumGameResult.Win;
+            else if (choices[userChoice] == choices[computerChoice])
+                gameResult = EnumGameResult.Draw;
+            else
+                gameResult = EnumGameResult.Loose;
+
+            return gameResult;
+        }
     }
 }

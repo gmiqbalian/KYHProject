@@ -21,21 +21,21 @@ namespace KYHProject
                 var mainSel = Menu.MainMenu();
                 if (mainSel == 0) return;
                 int subSel = 0;
-                GameController controller = null;
+                IController controller = null;
 
                 switch (mainSel)
                 {
                     case 1:
-                        //controller = new CalculatorController(dbContext);
+                        controller = new ShapeController(dbContext);
                         subSel = Menu.ShapeMenu();
                         break;
                     case 2:
-                        //controller = new CalculatorController(dbContext);
+                        controller = new CalculatorController(dbContext);
                         subSel = Menu.CalculatorMenu();
                         break;
                     case 3:
-                        controller = new GameController(dbContext);
-                        subSel = Menu.GameMenu();
+                        //controller = new GameController(dbContext);
+                        //subSel = Menu.GameMenu();
                         break;
                     default:
                         break;
@@ -43,17 +43,17 @@ namespace KYHProject
                 switch (subSel)
                 {
                     case 1:
-                        controller.Play();
+                        controller.Create();
                         break;
                     case 2:
-                        //controller.Update();
+                        controller.Update();
                         break;
                     case 3:
-                        //controller.Show();
+                        controller.Show();
                         System.Threading.Thread.Sleep(3000);
                         break;
                     case 4:
-                        //controller.Delete();
+                        controller.Delete();
                         break;
                     case 0:
                         break;

@@ -52,8 +52,26 @@
 
         //public static char GetOperator()
         //{
-        //    char.TryParse()
+        //    char input;
+        //    char.TryParse(Console.ReadLine(), out input);
+        //    while (true)
+        //    {
+        //        try
+        //        {
+        //            if (input == '+' || input == '-' || input == '/' || input == '*' || input == '%')
+        //                break;
+        //        }
+        //        catch (Exception)
+        //        {
+        //            Console.WriteLine("Please enter from the given options: ");
+        //        }
+        //    }
+            
+
+        //    return input; 
+
         //}
+
         //public static EnumShapeType 
     }
 }
