@@ -1,14 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleTables" Version="2.4.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -24,12 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Calculator\CalculatorApp.csproj" />
     <ProjectReference Include="..\DBContext\DBContextLibrary.csproj" />
-    <ProjectReference Include="..\Game\GameApp.csproj" />
     <ProjectReference Include="..\InputClassLibrary\InputLibrary.csproj" />
-    <ProjectReference Include="..\ServicesLibrary\ControllersLibrary.csproj" />
-    <ProjectReference Include="..\ShapesApp\ShapeApp.csproj" />
+    <ProjectReference Include="..\Services\ServicesLibrary.csproj" />
   </ItemGroup>
 
 </Project>

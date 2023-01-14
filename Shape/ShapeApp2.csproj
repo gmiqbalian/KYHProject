@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleTables" Version="2.4.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,17 +17,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Calculator\CalculatorApp.csproj" />
     <ProjectReference Include="..\DBContext\DBContextLibrary.csproj" />
-    <ProjectReference Include="..\Game\GameApp.csproj" />
     <ProjectReference Include="..\InputClassLibrary\InputLibrary.csproj" />
     <ProjectReference Include="..\ServicesLibrary\ControllersLibrary.csproj" />
-    <ProjectReference Include="..\ShapesApp\ShapeApp.csproj" />
+    <ProjectReference Include="..\Services\ServicesLibrary.csproj" />
   </ItemGroup>
 
 </Project>
