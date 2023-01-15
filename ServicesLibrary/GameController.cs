@@ -20,41 +20,39 @@ namespace KYHProject.ControllersLibrary
             _choices = new List<string> { "Rock", "Paper", "Scissors" };
         }
         public void Play()
-        {
-            var newGame = new GameResult();
-            newGame.PlayedOn = DateTime.Now;
+        {            
+            while (true)
+            {
+                var newGame = new GameResult();
+                newGame.PlayedOn = DateTime.Now;
 
-            ShowChoices();
 
-            int userChoice = Input.GetSelFromRange(3) - 1;
-            Console.WriteLine($"\nYou chose: {_choices[userChoice]}");
+                ShowChoices();
 
-            var random = new Random();
-            int computerChoice = random.Next(3);
-            Console.WriteLine($"\nComputer chose: {_choices[computerChoice]}");
+                int userChoice = Input.GetSelFromRange(3) - 1;
+                Console.WriteLine($"\nYou chose: {_choices[userChoice]}");
+                
+                var random = new Random();
+                int computerChoice = random.Next(3);
+                Console.WriteLine($"\nComputer chose: {_choices[computerChoice]}");
 
-            newGame.Result = CheckResult(_choices, userChoice, computerChoice);
+                newGame.Result = CheckResult(_choices, userChoice, computerChoice);
 
-            Console.WriteLine($"\nGame Result: {newGame.Result} !!!");
+                Console.WriteLine($"\nGame Result: {newGame.Result} !!!");
 
-            _dbContext.GamesResults.Add(newGame);
-            _dbContext.SaveChanges();
+                _dbContext.GamesResults.Add(newGame);
+                _dbContext.SaveChanges();
+                               
+                newGame.WinAverage = GetStats();
 
-            var totalWon = _dbContext.GamesResults.
-               Where(g => (int)g.Result == 1).
-               Count();
-            var totalPlayed = _dbContext.GamesResults.
-                Select(g => g.Result).
-                Count();
+                Console.Write("\nPlay again? y/n: ");
+                var sel = Console.ReadLine();  ////use input.GetChar();
+                if (sel == "n") break;
+            }
 
-            newGame.WinAverage = totalWon / totalPlayed;
-
-            //newGame.WinAverage = GetStats();
-            Console.WriteLine($"\nYour Win Percentage: {newGame.WinAverage} %");
-            
-            _dbContext.SaveChanges();
-
+            Console.WriteLine($"\nYour Win Percentage is: {GetStats().ToString("##.##")} %");
             System.Threading.Thread.Sleep(3000);
+            _dbContext.SaveChanges();
         }
         private void ShowChoices()
         {
@@ -66,7 +64,7 @@ namespace KYHProject.ControllersLibrary
                 index++;
             }
         }
-        private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice)
+        private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice) //review it
         {
             
             EnumGameResult gameResult;
@@ -75,7 +73,7 @@ namespace KYHProject.ControllersLibrary
                 gameResult = EnumGameResult.Win;
             else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[1])
                 gameResult = EnumGameResult.Win;
-            else if (choices[userChoice] == choices[2] && choices[computerChoice] == choices[0])
+            else if (choices[userChoice] == choices[1] && choices[computerChoice] == choices[0])
                 gameResult = EnumGameResult.Win;
             else if (choices[userChoice] == choices[computerChoice])
                 gameResult = EnumGameResult.Draw;
@@ -93,7 +91,7 @@ namespace KYHProject.ControllersLibrary
                 Select(g => g.Result).
                 Count();
 
-            return totalWon / totalPlayed;            
+            return (totalWon / (decimal)totalPlayed) * 100;            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace KYHProject.Models
         public int Id { get; set; }
         public DateTime PlayedOn { get; set; }        
         public EnumGameResult Result { get; set; }
-        public double WinAverage { get; set; }
+        public decimal WinAverage { get; set; }
 
     }
 }

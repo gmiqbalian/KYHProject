@@ -1,4 +1,6 @@
-﻿namespace InputClassLibrary
+﻿using Microsoft.Identity.Client;
+
+namespace InputClassLibrary
 {
     public static class Input
     {
@@ -50,28 +52,45 @@
             return sel;
         }
 
-        //public static char GetOperator()
-        //{
-        //    char input;
-        //    char.TryParse(Console.ReadLine(), out input);
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            if (input == '+' || input == '-' || input == '/' || input == '*' || input == '%')
-        //                break;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            Console.WriteLine("Please enter from the given options: ");
-        //        }
-        //    }
-            
-
-        //    return input; 
-
-        //}
-
-        //public static EnumShapeType 
+        public static char GetChar()  //FIXXXXXXXXXXXXXX THIS
+        {            
+            string stringInput = Console.ReadLine();
+            char charInput;
+            while (true)
+            {
+                try
+                {
+                    if (IsLetter(stringInput))
+                    {
+                        charInput = Convert.ToChar(stringInput);
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.Write("\nPlease enter only \"y\" or \"n\": ");
+                }                
+            }
+            return charInput;
+        }                
+        public static bool IsLetter(string input)
+        {
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                foreach (var c in input.ToCharArray())
+                {
+                    if (char.IsDigit(c))
+                        return false;
+                }
+            }
+            return true;
+        }
+        public static void PressAnyKey()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadKey();
+        }
     }
 }

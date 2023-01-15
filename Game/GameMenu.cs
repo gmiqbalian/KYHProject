@@ -35,7 +35,7 @@ namespace GameApp
                 {
                     case 1:
                         _gameController.Play();
-                        break;                    
+                        break;
                     default:
                         break;
                 }

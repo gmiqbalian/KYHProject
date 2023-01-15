@@ -13,7 +13,7 @@ namespace DBContextLibrary.Data
     {
         public DbSet<ShapeResult> ShapeResults { get; set; }
         public DbSet<CalculationResult> CalculationResults { get; set; }
-        public DbSet<GameResult> GamesResults { get; set; }
+        public DbSet<GameResult> GamesResults { get; set; } //change name to gameresults
 
         public AppDbContext()
         {
