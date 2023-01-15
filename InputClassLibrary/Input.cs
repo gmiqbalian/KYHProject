@@ -15,7 +15,7 @@ namespace InputClassLibrary
                     input = Convert.ToInt32(Console.ReadLine());
                     break;                    
                 }
-                catch (FormatException e)
+                catch (FormatException)
                 {                    
                     Console.Write("\nPlease enter a number: ");
                 }
@@ -32,7 +32,7 @@ namespace InputClassLibrary
                     input = Convert.ToDecimal(Console.ReadLine());
                     break;
                 }
-                catch (FormatException e)
+                catch (FormatException)
                 {
                     Console.Write("\nPlease enter a number: ");
                 }
@@ -51,46 +51,51 @@ namespace InputClassLibrary
             }
             return sel;
         }
-
-        public static char GetChar()  //FIXXXXXXXXXXXXXX THIS
-        {            
-            string stringInput = Console.ReadLine();
-            char charInput;
+        public static char GetYesNo()
+        {
+            char input;
             while (true)
             {
                 try
                 {
-                    if (IsLetter(stringInput))
-                    {
-                        charInput = Convert.ToChar(stringInput);
+                    input = Convert.ToChar(Console.ReadLine());
+
+                    if (char.IsLetter(input) && (input == 'y' || input == 'n'))
                         break;
-                    }
+                    else
+                        Console.Write("\nPlease enter only \"y\" or \"n\": ");
                 }
                 catch (Exception)
-                {
+                {                    
                     Console.Write("\nPlease enter only \"y\" or \"n\": ");
-                }                
-            }
-            return charInput;
-        }                
-        public static bool IsLetter(string input)
-        {
-            if (!string.IsNullOrWhiteSpace(input))
-            {
-                foreach (var c in input.ToCharArray())
-                {
-                    if (char.IsDigit(c))
-                        return false;
                 }
             }
-            return true;
-        }
+            return input;
+        }        
         public static void PressAnyKey()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nPress any key to continue...");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.ReadKey();
+        }
+        public static void WriteGreen(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(input);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteRed(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(input);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteYellow(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(input);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

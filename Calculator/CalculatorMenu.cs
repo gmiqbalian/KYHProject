@@ -38,7 +38,7 @@ namespace Calculator
                         break;
                     case 3:
                         _calculatorController.Show();
-                        System.Threading.Thread.Sleep(5000);
+                        Input.PressAnyKey();
                         break;
                     case 4:
                         _calculatorController.Delete();

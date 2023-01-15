@@ -26,7 +26,6 @@ namespace KYHProject.ControllersLibrary
                 var newGame = new GameResult();
                 newGame.PlayedOn = DateTime.Now;
 
-
                 ShowChoices();
 
                 int userChoice = Input.GetSelFromRange(3) - 1;
@@ -38,7 +37,7 @@ namespace KYHProject.ControllersLibrary
 
                 newGame.Result = CheckResult(_choices, userChoice, computerChoice);
 
-                Console.WriteLine($"\nGame Result: {newGame.Result} !!!");
+                Console.WriteLine($"\nGame Result: {newGame.Result}!!!");
 
                 _dbContext.GamesResults.Add(newGame);
                 _dbContext.SaveChanges();
@@ -46,11 +45,15 @@ namespace KYHProject.ControllersLibrary
                 newGame.WinAverage = GetStats();
 
                 Console.Write("\nPlay again? y/n: ");
-                var sel = Console.ReadLine();  ////use input.GetChar();
-                if (sel == "n") break;
-            }
+                var sel = Input.GetYesNo();
 
-            Console.WriteLine($"\nYour Win Percentage is: {GetStats().ToString("##.##")} %");
+                if (sel == 'n') break;               
+                
+            }
+                        
+            var text = $"\nYour Win Percentage is: {GetStats().ToString("##.##")} %";
+            Input.WriteGreen(text);
+
             System.Threading.Thread.Sleep(3000);
             _dbContext.SaveChanges();
         }

@@ -44,7 +44,7 @@ namespace ShapeApp
                         break;
                     case 3:
                         _shapeController.Show();
-                        System.Threading.Thread.Sleep(5000);
+                        Input.PressAnyKey();
                         break;
                     case 4:
                         _shapeController.Delete();

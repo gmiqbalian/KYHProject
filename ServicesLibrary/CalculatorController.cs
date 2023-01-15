@@ -16,7 +16,6 @@ namespace KYHProject.ControllersLibrary
             _dbContext = dbContext;
             _calStrategy = new CalStrategy();
         }
-
         public void Create()
         {
             var newCalculation = new CalculationResult();
@@ -33,13 +32,15 @@ namespace KYHProject.ControllersLibrary
             newCalculation.Result = _calStrategy.
                 ExecuteStrategy(newCalculation.a, newCalculation.b);
             
-            Console.WriteLine($"\nYour result is {newCalculation.a} " +
+            var text = ($"\nYour result is {newCalculation.a} " +
                 $"{newCalculation.Operator} " +
                 $"{newCalculation.b} " +
                 $"= {newCalculation.Result}");
+            Input.WriteYellow(text);
 
             _dbContext.CalculationResults.Add(newCalculation);
             _dbContext.SaveChanges();
+            Input.PressAnyKey();
         }
         public void Show()
         {
@@ -81,12 +82,15 @@ namespace KYHProject.ControllersLibrary
             calToUpdate.Result = _calStrategy.
                 ExecuteStrategy(calToUpdate.a, calToUpdate.b);
 
-            Console.WriteLine($"\nYour new result is {calToUpdate.a} " +
+            var text = ($"\nYour new result is {calToUpdate.a} " +
                 $"{calToUpdate.Operator} " +
                 $"{calToUpdate.b} " +
                 $"= {calToUpdate.Result}");
+            Input.WriteYellow(text);
 
-            _dbContext.SaveChanges();            
+            _dbContext.SaveChanges();
+            Input.WriteGreen("\nSucessfully updated the result!");
+            Input.PressAnyKey();
         }
         public void Delete()
         {
@@ -100,6 +104,9 @@ namespace KYHProject.ControllersLibrary
 
             _dbContext.CalculationResults.Remove(calToDelete);
             _dbContext.SaveChanges();
+
+            Input.WriteRed("\nSucessfully deleted the result!");
+            Input.PressAnyKey();
         }
         private void SetCalculationStrategy(CalculationResult forCalculation)
         {

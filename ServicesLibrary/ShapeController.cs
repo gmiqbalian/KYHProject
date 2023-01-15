@@ -33,10 +33,11 @@ namespace KYHProject.ControllersLibrary
                 Area = _shape.GetArea(),
                 Perimeter = _shape.GetPerimeter()
             });
-                        
-            _dbContext.SaveChanges();
-        }
 
+            _dbContext.SaveChanges();
+            Input.WriteGreen("\nSuccesfully added a Shape!");
+            Input.PressAnyKey();
+        }
         public void Show()
         {
             var shapesList = _dbContext.ShapeResults.
@@ -79,6 +80,10 @@ namespace KYHProject.ControllersLibrary
             shapeToUpdate.ValueC = _shape.c;
             shapeToUpdate.Area = _shape.GetArea();
             shapeToUpdate.Perimeter = _shape.GetPerimeter();
+
+            _dbContext.SaveChanges();
+            Input.WriteGreen("\nSuccesfully updated the Shape!");            
+            Input.PressAnyKey();
         }
         public void Delete()
         {
@@ -92,6 +97,8 @@ namespace KYHProject.ControllersLibrary
 
             _dbContext.ShapeResults.Remove(shapeToDelete);
             _dbContext.SaveChanges();
+            Input.WriteRed("\nSuccesfully deleted the Shape!");
+            Input.PressAnyKey();
         }
         private static int ShowShapeTypes()
         {
@@ -102,7 +109,7 @@ namespace KYHProject.ControllersLibrary
             Console.WriteLine("3. Triangle");
             Console.WriteLine("4. Rhombus");
                         
-            return Input.GetSelFromRange(3);           
+            return Input.GetSelFromRange(4);           
         }
         private void GetShape()
         {
