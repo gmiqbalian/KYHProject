@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+﻿using DBContextLibrary.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace InputClassLibrary
 {
@@ -96,6 +98,20 @@ namespace InputClassLibrary
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(input);
             Console.ForegroundColor = ConsoleColor.Gray;
+        }        
+        public static int CheckId(List<int> intList)
+        {
+            int id = 0;
+            while (true)
+            {
+                Console.Write("\nEnter Id from the above table: ");
+                id = Input.GetInt();
+                if (intList.Contains(id))
+                    break;
+                else 
+                    Console.Write("\nId did not match.");
+            }
+            return id;
         }
     }
 }

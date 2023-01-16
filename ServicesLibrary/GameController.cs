@@ -67,7 +67,7 @@ namespace KYHProject.ControllersLibrary
                 index++;
             }
         }
-        private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice) //review it
+        private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice)
         {
             
             EnumGameResult gameResult;

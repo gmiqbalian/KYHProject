@@ -65,9 +65,12 @@ namespace KYHProject.ControllersLibrary
         {
             Show();
 
-            Console.Write("\nEnter calculation Id to update: ");
-            var calToUpdateId = Input.GetInt();
+            var idList = _dbContext.
+                CalculationResults.
+                Select(c => c.Id).ToList();
 
+            var calToUpdateId = Input.CheckId(idList);
+                        
             var calToUpdate = _dbContext.CalculationResults.
                 First(c => c.Id == calToUpdateId);
 
@@ -96,8 +99,11 @@ namespace KYHProject.ControllersLibrary
         {
             Show();
 
-            Console.Write("\nEnter calculation Id to delete: ");
-            var calToDeleteId = Input.GetInt();
+            var idList = _dbContext.
+                CalculationResults.
+                Select(c => c.Id).ToList();
+                        
+            var calToDeleteId = Input.CheckId(idList);
 
             var calToDelete = _dbContext.CalculationResults.
                 First(c=> c.Id == calToDeleteId);

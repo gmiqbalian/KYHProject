@@ -12,7 +12,5 @@ namespace KYHProject.ControllersLibrary
         public void Show();
         public void Update();
         public void Delete();
-
-
     }
 }

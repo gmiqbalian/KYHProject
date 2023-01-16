@@ -2,40 +2,33 @@
 using KYHProject.Enums;
 using ConsoleTables;
 using KYHProject.Models;
-using ServicesLibrary.ShapeFactory;
+using ServicesLibrary.ShapeServices;
 using DBContextLibrary.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace KYHProject.ControllersLibrary
 {
     public class ShapeController : IController
     {
         private readonly AppDbContext _dbContext;
-        private readonly ShapeFactory _shapeCreator;
-        private Shape _shape;
+        private ShapeResult _shape;
         
         public ShapeController(AppDbContext dbContext) 
         {
-            _dbContext = dbContext;            
-            _shapeCreator = new ShapeCreator();
+            _dbContext = dbContext;
+            
         }
         public void Create()
         {            
-            GetShape();
+            _shape = new ShapeResult();
+            
+            GetInputValues();
+            CalculateAreaPerimeter();
 
-            _dbContext.ShapeResults.Add(new ShapeResult
-            {
-                CreatedOn = DateTime.Now,
-                Type = _shape.Type,
-                Height = _shape.h,
-                Base = _shape.b,
-                ValueA = _shape.a,
-                ValueC = _shape.c,
-                Area = _shape.GetArea(),
-                Perimeter = _shape.GetPerimeter()
-            });
-
+            _dbContext.ShapeResults.Add(_shape);
             _dbContext.SaveChanges();
-            Input.WriteGreen("\nSuccesfully added a Shape!");
+
+            Input.WriteYellow($"\nArea = {_shape.Area}cm2 and Perimeter = {_shape.Perimeter}cm2");
             Input.PressAnyKey();
         }
         public void Show()
@@ -64,33 +57,34 @@ namespace KYHProject.ControllersLibrary
         public void Update()
         {
             Show();
-
-            Console.Write("\nEnter shape Id to update: ");
-            var shapeIdToUpdate = Input.GetInt();
-
-            var shapeToUpdate = _dbContext.ShapeResults.
-                First(s => s.Id == shapeIdToUpdate);
             
-            GetShape();            
+            var idList = _dbContext.
+                ShapeResults.
+                Select(r => r.Id).ToList();
 
-            shapeToUpdate.Type = _shape.Type;
-            shapeToUpdate.Base = _shape.b;
-            shapeToUpdate.Height = _shape.h;
-            shapeToUpdate.ValueA = _shape.a;
-            shapeToUpdate.ValueC = _shape.c;
-            shapeToUpdate.Area = _shape.GetArea();
-            shapeToUpdate.Perimeter = _shape.GetPerimeter();
+            var shapeIdToUpdate = Input.CheckId(idList);
+            
+            _shape = _dbContext.
+                ShapeResults.
+                First(s => s.Id == shapeIdToUpdate);
+
+            GetInputValues();
+            CalculateAreaPerimeter();
 
             _dbContext.SaveChanges();
-            Input.WriteGreen("\nSuccesfully updated the Shape!");            
+            Input.WriteYellow($"\nNew Area = {_shape.Area}cm2 and New Perimeter = {_shape.Perimeter}cm2");
+            Input.WriteGreen("\nSuccesfully updated the choosen Shape!");
             Input.PressAnyKey();
         }
         public void Delete()
-        {
+        {            
             Show();
 
-            Console.Write("\nEnter shape Id to delete: ");
-            var shapeIdToDelete = Input.GetInt();
+            var idList = _dbContext.
+                ShapeResults.
+                Select(r => r.Id).ToList();
+
+            var shapeIdToDelete = Input.CheckId(idList);
 
             var shapeToDelete = _dbContext.ShapeResults.
                 First(s => s.Id == shapeIdToDelete);
@@ -111,31 +105,58 @@ namespace KYHProject.ControllersLibrary
                         
             return Input.GetSelFromRange(4);           
         }
-        private void GetShape()
+        private void GetInputValues()
         {
-            _shape = new Shape();
-
             var sel = ShowShapeTypes();
-            _shape = _shapeCreator.GetShape(sel);
+
+            _shape.CreatedOn = DateTime.Now;
             _shape.Type = (EnumShapeType)sel;
 
             Console.Write("\nEnter shape base (b) value in cm: ");
-            _shape.b = Input.GetDecimal();
+            _shape.Base = Input.GetDecimal();
 
             Console.Write("\nEnter shape height (h) value in cm: ");
-            _shape.h = Input.GetDecimal();
+            _shape.Height = Input.GetDecimal();
 
             if (_shape.Type == EnumShapeType.Parallelogram ||
                 _shape.Type == EnumShapeType.Triangle)
             {
                 Console.Write("\nEnter value of side (a) in cm: ");
-                _shape.a = Input.GetDecimal();
+                _shape.ValueA = Input.GetDecimal();
             }
             if (_shape.Type == EnumShapeType.Triangle)
             {
                 Console.Write("\nEnter value of side (c) in cm: ");
-                _shape.c = Input.GetDecimal();
+                _shape.ValueC = Input.GetDecimal();
             }
+        }        
+        private void CalculateAreaPerimeter()
+        {
+            var shapeStrategy = new ShapeStrategy();
+
+            switch (_shape.Type)
+            {
+                case EnumShapeType.Rectangle:
+                    shapeStrategy.
+                        SetStrategy(new RectangleStrategy());
+                    break;
+                case EnumShapeType.Parallelogram:
+                    shapeStrategy.
+                        SetStrategy(new ParallelogramStrategy());
+                    break;
+                case EnumShapeType.Triangle:
+                    shapeStrategy.
+                        SetStrategy(new TriangleStrategy());
+                    break;
+                case EnumShapeType.Rhombus:
+                    shapeStrategy.
+                        SetStrategy(new RhombusStrategy());
+                    break;
+                default:
+                    break;
+            }
+            
+            shapeStrategy.ExecuteStrategy(_shape);
         }
     }
 }
