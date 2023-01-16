@@ -47,9 +47,9 @@ namespace Calculator
                         break;
                 }
             }
-            
+
 
         }
-        
+
     }
 }

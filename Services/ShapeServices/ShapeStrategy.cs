@@ -1,32 +1,36 @@
-﻿using KYHProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KYHProject.Enums;
+using KYHProject.Models;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace ServicesLibrary.ShapeServices
 {
     public class ShapeStrategy
     {
         private IShapeStrategy _strategy;
-
-        public void SetStrategy(IShapeStrategy strategy)
+        
+        public void SetStrategy(ShapeResult _forShape)
         {
-            _strategy = strategy;
+            switch (_forShape.Type)
+            {
+                case EnumShapeType.Rectangle:
+                    _strategy = new RectangleStrategy();
+                    break;
+                case EnumShapeType.Parallelogram:
+                    _strategy = new ParallelogramStrategy();
+                    break;
+                case EnumShapeType.Triangle:
+                    _strategy = new TriangleStrategy();
+                    break;
+                case EnumShapeType.Rhombus:
+                    _strategy = new RhombusStrategy();
+                    break;
+                default:
+                    break;
+            }
         }
-
-        //public AreaPerimeter ExecuteStrategy(decimal b, decimal h, decimal a, decimal c)
-        //{
-        //    return _strategy.GetAreaPerimeter(b, h, a, c );
-        //}
-        //public AreaPerimeter ExecuteStrategy(ShapeResult forShape)
-        //{
-        //    return _strategy.GetAreaPerimeter(forShape);
-        //}
-        public void ExecuteStrategy (ShapeResult forShape)
+        public void ExecuteStrategy(ShapeResult _forShape)
         {
-            _strategy.GetAreaPerimeter(forShape);
+            _strategy.GetAreaPerimeter(_forShape);
         }
     }
 }

@@ -2,11 +2,6 @@
 using InputClassLibrary;
 using KYHProject.Enums;
 using KYHProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KYHProject.ControllersLibrary
 {
@@ -20,7 +15,7 @@ namespace KYHProject.ControllersLibrary
             _choices = new List<string> { "Rock", "Paper", "Scissors" };
         }
         public void Play()
-        {            
+        {
             while (true)
             {
                 var newGame = new GameResult();
@@ -30,27 +25,28 @@ namespace KYHProject.ControllersLibrary
 
                 int userChoice = Input.GetSelFromRange(3) - 1;
                 Console.WriteLine($"\nYou chose: {_choices[userChoice]}");
-                
+
                 var random = new Random();
                 int computerChoice = random.Next(3);
                 Console.WriteLine($"\nComputer chose: {_choices[computerChoice]}");
 
                 newGame.Result = CheckResult(_choices, userChoice, computerChoice);
 
-                Console.WriteLine($"\nGame Result: {newGame.Result}!!!");
+                string message = $"\nGame Result: {newGame.Result}!!!";
+                Input.WriteYellow(message);
 
                 _dbContext.GamesResults.Add(newGame);
                 _dbContext.SaveChanges();
-                               
+
                 newGame.WinAverage = GetStats();
 
                 Console.Write("\nPlay again? y/n: ");
                 var sel = Input.GetYesNo();
 
-                if (sel == 'n') break;               
-                
+                if (sel == 'n') break;
+
             }
-                        
+
             var text = $"\nYour Win Percentage is: {GetStats().ToString("##.##")} %";
             Input.WriteGreen(text);
 
@@ -69,7 +65,7 @@ namespace KYHProject.ControllersLibrary
         }
         private EnumGameResult CheckResult(List<string> choices, int userChoice, int computerChoice)
         {
-            
+
             EnumGameResult gameResult;
 
             if (choices[userChoice] == choices[0] && choices[computerChoice] == choices[2])
@@ -94,7 +90,7 @@ namespace KYHProject.ControllersLibrary
                 Select(g => g.Result).
                 Count();
 
-            return (totalWon / (decimal)totalPlayed) * 100;            
+            return (totalWon / (decimal)totalPlayed) * 100;
         }
     }
 }

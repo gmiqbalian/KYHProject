@@ -3,7 +3,6 @@ using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.Models;
 using KYHProject.Services;
-using System.Reflection.Metadata.Ecma335;
 
 namespace KYHProject.ControllersLibrary
 {
@@ -20,9 +19,9 @@ namespace KYHProject.ControllersLibrary
         {
             var newCalculation = new CalculationResult();
             newCalculation.CreatedOn = DateTime.Now;
-                        
+
             SetCalculationStrategy(newCalculation);
-            
+
             Console.Write("\nEnter number 1: ");
             newCalculation.a = Input.GetDecimal();
 
@@ -31,7 +30,7 @@ namespace KYHProject.ControllersLibrary
 
             newCalculation.Result = _calStrategy.
                 ExecuteStrategy(newCalculation.a, newCalculation.b);
-            
+
             var text = ($"\nYour result is {newCalculation.a} " +
                 $"{newCalculation.Operator} " +
                 $"{newCalculation.b} " +
@@ -46,17 +45,17 @@ namespace KYHProject.ControllersLibrary
         {
             var calList = _dbContext.CalculationResults.ToList();
             var table = new ConsoleTable(
-                "Id", 
-                "Value a", 
-                "Operator", 
-                "Value b", 
+                "Id",
+                "Value a",
+                "Operator",
+                "Value b",
                 "Result");
 
-            foreach (var c in calList)            
-                table.AddRow(c.Id, 
-                    c.a, 
-                    c.Operator, 
-                    c.b, 
+            foreach (var c in calList)
+                table.AddRow(c.Id,
+                    c.a,
+                    c.Operator,
+                    c.b,
                     c.Result);
 
             Console.WriteLine(table);
@@ -70,7 +69,7 @@ namespace KYHProject.ControllersLibrary
                 Select(c => c.Id).ToList();
 
             var calToUpdateId = Input.CheckId(idList);
-                        
+
             var calToUpdate = _dbContext.CalculationResults.
                 First(c => c.Id == calToUpdateId);
 
@@ -102,11 +101,11 @@ namespace KYHProject.ControllersLibrary
             var idList = _dbContext.
                 CalculationResults.
                 Select(c => c.Id).ToList();
-                        
+
             var calToDeleteId = Input.CheckId(idList);
 
             var calToDelete = _dbContext.CalculationResults.
-                First(c=> c.Id == calToDeleteId);
+                First(c => c.Id == calToDeleteId);
 
             _dbContext.CalculationResults.Remove(calToDelete);
             _dbContext.SaveChanges();
@@ -124,9 +123,9 @@ namespace KYHProject.ControllersLibrary
             Console.WriteLine("4: / Division");
             Console.WriteLine("5: % Modulus");
             Console.WriteLine("0: Exit");
-                        
+
             var sel = Input.GetSelFromRange(5);
-                        
+
             switch (sel)
             {
                 case 1:

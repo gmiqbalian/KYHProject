@@ -1,11 +1,6 @@
 ﻿using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.ControllersLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShapeApp
 {
@@ -20,7 +15,7 @@ namespace ShapeApp
         }
         public void ShowShapeMenu()
         {
-            while (true) 
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("\nShapes\n");
@@ -48,7 +43,7 @@ namespace ShapeApp
                         break;
                     case 4:
                         _shapeController.Delete();
-                        break;                    
+                        break;
                     default:
                         break;
                 }

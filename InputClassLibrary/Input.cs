@@ -1,8 +1,4 @@
-﻿using DBContextLibrary.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-
-namespace InputClassLibrary
+﻿namespace InputClassLibrary
 {
     public static class Input
     {
@@ -15,10 +11,10 @@ namespace InputClassLibrary
                 try
                 {
                     input = Convert.ToInt32(Console.ReadLine());
-                    break;                    
+                    break;
                 }
                 catch (FormatException)
-                {                    
+                {
                     Console.Write("\nPlease enter a number: ");
                 }
             }
@@ -68,12 +64,12 @@ namespace InputClassLibrary
                         Console.Write("\nPlease enter only \"y\" or \"n\": ");
                 }
                 catch (Exception)
-                {                    
+                {
                     Console.Write("\nPlease enter only \"y\" or \"n\": ");
                 }
             }
             return input;
-        }        
+        }
         public static void PressAnyKey()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -98,7 +94,7 @@ namespace InputClassLibrary
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(input);
             Console.ForegroundColor = ConsoleColor.Gray;
-        }        
+        }
         public static int CheckId(List<int> intList)
         {
             int id = 0;
@@ -108,7 +104,7 @@ namespace InputClassLibrary
                 id = Input.GetInt();
                 if (intList.Contains(id))
                     break;
-                else 
+                else
                     Console.Write("\nId did not match.");
             }
             return id;

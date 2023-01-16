@@ -1,34 +1,36 @@
-﻿using InputClassLibrary;
+﻿using ConsoleTables;
+using DBContextLibrary.Data;
+using InputClassLibrary;
 using KYHProject.Enums;
-using ConsoleTables;
 using KYHProject.Models;
 using ServicesLibrary.ShapeServices;
-using DBContextLibrary.Data;
-using System.Reflection.Metadata.Ecma335;
 
 namespace KYHProject.ControllersLibrary
 {
     public class ShapeController : IController
     {
         private readonly AppDbContext _dbContext;
+        private readonly ShapeStrategy _shapeStrategy;
         private ShapeResult _shape;
-        
-        public ShapeController(AppDbContext dbContext) 
+
+        public ShapeController(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            
+            _shapeStrategy = new ShapeStrategy();
         }
         public void Create()
-        {            
+        {
             _shape = new ShapeResult();
-            
             GetInputValues();
-            CalculateAreaPerimeter();
+            _shapeStrategy.SetStrategy(_shape);
+            _shapeStrategy.ExecuteStrategy(_shape);
 
             _dbContext.ShapeResults.Add(_shape);
             _dbContext.SaveChanges();
 
-            Input.WriteYellow($"\nArea = {_shape.Area}cm2 and Perimeter = {_shape.Perimeter}cm2");
+            Input.WriteYellow($"\nArea = {_shape.Area}cm2");
+            Input.WriteYellow($"\nPerimeter = {_shape.Perimeter}cm2");
+
             Input.PressAnyKey();
         }
         public void Show()
@@ -37,18 +39,18 @@ namespace KYHProject.ControllersLibrary
                 ToList();
 
             var table = new ConsoleTable(
-                "Shape ID", 
-                "Date", 
-                "Type", 
-                "Area (cm2)", 
-                "Perimeter (cm2)");            
+                "Shape ID",
+                "Date",
+                "Type",
+                "Area (cm2)",
+                "Perimeter (cm2)");
             foreach (var s in shapesList)
             {
                 table.AddRow(
-                    s.Id, 
+                    s.Id,
                     s.CreatedOn.ToShortDateString(),
                     s.Type,
-                    s.Area, 
+                    s.Area,
                     s.Perimeter);
             }
 
@@ -57,27 +59,30 @@ namespace KYHProject.ControllersLibrary
         public void Update()
         {
             Show();
-            
+
             var idList = _dbContext.
                 ShapeResults.
                 Select(r => r.Id).ToList();
 
             var shapeIdToUpdate = Input.CheckId(idList);
-            
+
             _shape = _dbContext.
                 ShapeResults.
                 First(s => s.Id == shapeIdToUpdate);
 
             GetInputValues();
-            CalculateAreaPerimeter();
+            _shapeStrategy.SetStrategy(_shape);
+            _shapeStrategy.ExecuteStrategy(_shape);
 
             _dbContext.SaveChanges();
-            Input.WriteYellow($"\nNew Area = {_shape.Area}cm2 and New Perimeter = {_shape.Perimeter}cm2");
+
+            Input.WriteYellow($"\nNew Area = {_shape.Area}cm2");
+            Input.WriteYellow($"\nNew Perimeter = {_shape.Perimeter}cm2");
             Input.WriteGreen("\nSuccesfully updated the choosen Shape!");
             Input.PressAnyKey();
         }
         public void Delete()
-        {            
+        {
             Show();
 
             var idList = _dbContext.
@@ -102,8 +107,8 @@ namespace KYHProject.ControllersLibrary
             Console.WriteLine("2. Parallelogram");
             Console.WriteLine("3. Triangle");
             Console.WriteLine("4. Rhombus");
-                        
-            return Input.GetSelFromRange(4);           
+
+            return Input.GetSelFromRange(4);
         }
         private void GetInputValues()
         {
@@ -129,34 +134,6 @@ namespace KYHProject.ControllersLibrary
                 Console.Write("\nEnter value of side (c) in cm: ");
                 _shape.ValueC = Input.GetDecimal();
             }
-        }        
-        private void CalculateAreaPerimeter()
-        {
-            var shapeStrategy = new ShapeStrategy();
-
-            switch (_shape.Type)
-            {
-                case EnumShapeType.Rectangle:
-                    shapeStrategy.
-                        SetStrategy(new RectangleStrategy());
-                    break;
-                case EnumShapeType.Parallelogram:
-                    shapeStrategy.
-                        SetStrategy(new ParallelogramStrategy());
-                    break;
-                case EnumShapeType.Triangle:
-                    shapeStrategy.
-                        SetStrategy(new TriangleStrategy());
-                    break;
-                case EnumShapeType.Rhombus:
-                    shapeStrategy.
-                        SetStrategy(new RhombusStrategy());
-                    break;
-                default:
-                    break;
-            }
-            
-            shapeStrategy.ExecuteStrategy(_shape);
-        }
+        }      
     }
 }

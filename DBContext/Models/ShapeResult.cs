@@ -1,4 +1,6 @@
 ﻿using KYHProject.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KYHProject.Models
 {
@@ -9,9 +11,9 @@ namespace KYHProject.Models
         public EnumShapeType Type { get; set; }
         public decimal Base { get; set; }
         public decimal Height { get; set; }
-        public decimal ValueA { get; set; }
+        public decimal ValueA { get; set; }   
         public decimal ValueC { get; set; }
-        public decimal Area { get; set; }        
-        public decimal Perimeter { get; set; }                
+        public decimal Area { get; set; }
+        public decimal Perimeter { get; set; }
     }
 }
