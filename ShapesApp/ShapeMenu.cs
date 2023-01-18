@@ -1,16 +1,15 @@
 ﻿using DBContextLibrary.Data;
 using InputClassLibrary;
+using KYHProject;
 using KYHProject.ControllersLibrary;
 
 namespace ShapeApp
 {
-    public class ShapesMenu
-    {
-        private readonly AppDbContext _dbContext;
+    public class ShapeMenu : IShapeMenu
+    {        
         private readonly IController _shapeController;
-        public ShapesMenu(AppDbContext dbContext, IController shapeController)
-        {
-            _dbContext = dbContext;
+        public ShapeMenu(IController shapeController)
+        {     
             _shapeController = shapeController;
         }
         public void ShowShapeMenu()

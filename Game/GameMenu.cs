@@ -6,13 +6,11 @@ using KYHProject.ControllersLibrary;
 namespace GameApp
 {
     public class GameMenu
-    {
-        private readonly AppDbContext _dbContext;
+    {        
         private IGameController _gameController;
-        public GameMenu(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-            _gameController = new GameController(_dbContext);
+        public GameMenu(GameController gameController)
+        {     
+            _gameController = gameController;
         }
         public void ShowGameMenu()
         {

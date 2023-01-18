@@ -2,6 +2,7 @@
 using ControllersLibrary;
 using DBContextLibrary.Data;
 using GameApp;
+using InputClassLibrary;
 using KYHProject.ControllersLibrary;
 using ShapeApp;
 
@@ -13,29 +14,32 @@ namespace KYHProject
         {
             var builder = new Builder();
             var dbContext = builder.BuildApp();
-            ControllerFactory mainController = new ControllerFactory(dbContext);
-            IController controller = null;
+            ControllerFactory mainController = new ControllerFactory(dbContext);            
+            MenuFactory menuFacotry = new MenuFactory(dbContext, mainController);
 
             while (true)
             {
-                var mainSel = Menu.MainMenu();
+                Console.Clear();
+                Console.WriteLine("\nMain Menu\n");
+
+                Console.WriteLine("1. Shapes");
+                Console.WriteLine("2. Calculation");
+                Console.WriteLine("3. Game");
+                Console.WriteLine("0. Exit");
+                                
+                var mainSel = Input.GetSelFromRange(3);
                 if (mainSel == 0) return;
 
                 switch (mainSel)
                 {
                     case 1:
-                        controller = mainController.GetController("shape");
-                        var shapeApp = new ShapesMenu(dbContext, controller);
-                        shapeApp.ShowShapeMenu();
+                        menuFacotry.GetMenu("shape");                        
                         break;
                     case 2:
-                        controller = mainController.GetController("calculator");
-                        var calculatorApp = new CalculatorMenu(dbContext, controller);
-                        calculatorApp.ShowCalulatorMenu();
+                        menuFacotry.GetMenu("calculator");                        
                         break;
                     case 3:
-                        var gameApp = new GameMenu(dbContext);
-                        gameApp.ShowGameMenu();
+                        menuFacotry.GetMenu("game");                        
                         break;
                     default:
                         break;

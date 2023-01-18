@@ -5,12 +5,11 @@ using KYHProject.ControllersLibrary;
 namespace Calculator
 {
     public class CalculatorMenu
-    {
-        private readonly AppDbContext _dbContext;
+    {        
         private readonly IController _calculatorController;
-        public CalculatorMenu(AppDbContext dbContext, IController calculatorController)
-        {
-            _calculatorController = calculatorController;
+        public CalculatorMenu(IController calculatorController)
+        {     
+            _calculatorController = calculatorController;            
         }
         public void ShowCalulatorMenu()
         {
