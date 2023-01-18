@@ -10,13 +10,13 @@ namespace KYHProject.ControllersLibrary
     public class ShapeController : IController
     {
         private readonly AppDbContext _dbContext;
-        private readonly ShapeStrategy _shapeStrategy;
+        private readonly ShapeServices _shapeServices;
         private ShapeResult _shape;
 
-        public ShapeController(AppDbContext dbContext)
+        public ShapeController(AppDbContext dbContext, ShapeServices shapeServices)
         {
             _dbContext = dbContext;
-            _shapeStrategy = new ShapeStrategy();
+            _shapeServices = shapeServices;
         }
         public void Create()
         {
@@ -24,8 +24,8 @@ namespace KYHProject.ControllersLibrary
 
             _shape = new ShapeResult();
             GetInputValues();
-            _shapeStrategy.SetStrategy(_shape);
-            _shapeStrategy.ExecuteStrategy(_shape);
+            _shapeServices.SetStrategy(_shape);
+            _shapeServices.ExecuteStrategy(_shape);
 
             _dbContext.ShapeResults.Add(_shape);
             _dbContext.SaveChanges();
@@ -80,8 +80,8 @@ namespace KYHProject.ControllersLibrary
                 First(s => s.Id == shapeIdToUpdate);
 
             GetInputValues();
-            _shapeStrategy.SetStrategy(_shape);
-            _shapeStrategy.ExecuteStrategy(_shape);
+            _shapeServices.SetStrategy(_shape);
+            _shapeServices.ExecuteStrategy(_shape);
 
             _dbContext.SaveChanges();
 

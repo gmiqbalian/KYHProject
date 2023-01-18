@@ -12,11 +12,11 @@ namespace KYHProject.ControllersLibrary
     public class CalculatorController : IController
     {
         private AppDbContext _dbContext;
-        private CalStrategy _calStrategy;
-        public CalculatorController(AppDbContext dbContext)
+        private CalculatorServices _calServices;
+        public CalculatorController(AppDbContext dbContext, CalculatorServices calServices)
         {
             _dbContext = dbContext;
-            _calStrategy = new CalStrategy();
+            _calServices = calServices;            
         }
         public void Create()
         {
@@ -36,7 +36,7 @@ namespace KYHProject.ControllersLibrary
             Console.Write("\nEnter number 2: ");
             newCalculation.b = Input.GetDecimal();
 
-            newCalculation.Result = _calStrategy.
+            newCalculation.Result = _calServices.
                 ExecuteStrategy(newCalculation.a, newCalculation.b);
 
             var text = ($"\nYour result is {newCalculation.a} " +
@@ -101,7 +101,7 @@ namespace KYHProject.ControllersLibrary
             Console.Write("\nEnter number 2: ");
             calToUpdate.b = Input.GetDecimal();
 
-            calToUpdate.Result = _calStrategy.
+            calToUpdate.Result = _calServices.
                 ExecuteStrategy(calToUpdate.a, calToUpdate.b);
 
             var text = ($"\nYour new result is {calToUpdate.a} " +
@@ -142,27 +142,27 @@ namespace KYHProject.ControllersLibrary
             switch (sel)
             {
                 case 1:
-                    _calStrategy.
+                    _calServices.
                         SetStrategy(new AdditionStrategy());
                     forCalculation.Operator = '+';
                     break;
                 case 2:
-                    _calStrategy.
+                    _calServices.
                         SetStrategy(new SubtractionStrategy());
                     forCalculation.Operator = '-';
                     break;
                 case 3:
-                    _calStrategy.
+                    _calServices.
                         SetStrategy(new MultiplicationStrategy());
                     forCalculation.Operator = '*';
                     break;
                 case 4:
-                    _calStrategy.
+                    _calServices.
                         SetStrategy(new DivisionStrategy());
                     forCalculation.Operator = '/';
                     break;
                 case 5:
-                    _calStrategy.
+                    _calServices.
                         SetStrategy(new ModulusStrategy());
                     forCalculation.Operator = '%';
                     break;

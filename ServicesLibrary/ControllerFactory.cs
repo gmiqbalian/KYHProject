@@ -1,5 +1,7 @@
 ﻿using DBContextLibrary.Data;
 using KYHProject.ControllersLibrary;
+using KYHProject.Services;
+using ServicesLibrary.ShapeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace ControllersLibrary
     public class ControllerFactory
     {
         private IController _controller;
-        private AppDbContext _dbContext;
+        private AppDbContext _dbContext;        
         public ControllerFactory(AppDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -21,10 +23,12 @@ namespace ControllersLibrary
             switch (name)
             {
                 case "shape":
-                    _controller = new ShapeController(_dbContext);
+                    _controller = new ShapeController
+                        (_dbContext, new ShapeServices());
                     break;
-                case "calculator":
-                    _controller = new CalculatorController(_dbContext);
+                case "calculator":                    
+                    _controller = new CalculatorController
+                        (_dbContext, new CalculatorServices());
                     break;
                 default:
                     break;

@@ -15,9 +15,9 @@ namespace KYHProject
 {
     public class MenuFactory
     {
-        ControllerFactory _controller;
         private readonly AppDbContext _dbContext;
-        public MenuFactory(AppDbContext dbContext, ControllerFactory controller)
+        private readonly ControllerFactory _controller;                
+        public MenuFactory(AppDbContext dbContext,ControllerFactory controller)
         {
             _dbContext = dbContext;
             _controller = controller;
@@ -26,14 +26,14 @@ namespace KYHProject
         {
             switch (name)
             {
-                case "shape":                    
-                    var shapeApp = new ShapeMenu(
-                        _controller.GetController("shape"));
+                case "shape":
+                    var shapeApp = new ShapeMenu
+                        (_controller.GetController("shape"));
                     shapeApp.ShowShapeMenu();
                     break;
                 case "calculator":
-                    var calApp = new CalculatorMenu(
-                        _controller.GetController("calculator"));
+                    var calApp = new CalculatorMenu
+                    (_controller.GetController("calculator"));
                     calApp.ShowCalulatorMenu();
                     break;
                 case "game":

@@ -4,6 +4,7 @@ using DBContextLibrary.Data;
 using GameApp;
 using InputClassLibrary;
 using KYHProject.ControllersLibrary;
+using ServicesLibrary.ShapeServices;
 using ShapeApp;
 
 namespace KYHProject
@@ -14,8 +15,10 @@ namespace KYHProject
         {
             var builder = new Builder();
             var dbContext = builder.BuildApp();
-            ControllerFactory mainController = new ControllerFactory(dbContext);            
+
+            ControllerFactory mainController = new ControllerFactory(dbContext);
             MenuFactory menuFacotry = new MenuFactory(dbContext, mainController);
+
 
             while (true)
             {
@@ -32,7 +35,7 @@ namespace KYHProject
 
                 switch (mainSel)
                 {
-                    case 1:
+                    case 1:                        
                         menuFacotry.GetMenu("shape");                        
                         break;
                     case 2:

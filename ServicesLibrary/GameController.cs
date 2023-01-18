@@ -35,7 +35,13 @@ namespace KYHProject.ControllersLibrary
                 newGame.Result = CheckResult(_choices, userChoice, computerChoice);
 
                 string message = $"\nGame Result: {newGame.Result}!!!";
-                Input.WriteYellow(message);
+                
+                if(newGame.Result == EnumGameResult.Win)
+                    Input.WriteGreen(message);
+                else if (newGame.Result == EnumGameResult.Lose)
+                    Input.WriteRed(message);
+                else if (newGame.Result == EnumGameResult.Draw)
+                    Input.WriteYellow(message);
 
                 _dbContext.GamesResults.Add(newGame);
                 _dbContext.SaveChanges();
@@ -79,7 +85,7 @@ namespace KYHProject.ControllersLibrary
             else if (choices[userChoice] == choices[computerChoice])
                 gameResult = EnumGameResult.Draw;
             else
-                gameResult = EnumGameResult.Loose;
+                gameResult = EnumGameResult.Lose;
 
             return gameResult;
         }

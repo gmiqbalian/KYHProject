@@ -2,7 +2,7 @@
 
 namespace KYHProject.Services
 {
-    public class CalStrategy
+    public class CalculatorServices
     {
         private ICalStrategy _calStrategy;
         public void SetStrategy(ICalStrategy calStrategy)

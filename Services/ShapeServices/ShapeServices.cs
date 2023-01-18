@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace ServicesLibrary.ShapeServices
 {
-    public class ShapeStrategy
+    public class ShapeServices
     {
         private IShapeStrategy _strategy;        
         public void SetStrategy(ShapeResult _forShape)

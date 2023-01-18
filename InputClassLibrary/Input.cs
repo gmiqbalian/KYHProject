@@ -17,7 +17,7 @@ namespace InputClassLibrary
                 }
                 catch (FormatException)
                 {
-                    Input.WriteRed("\nPlease enter a number: ");
+                    Input.WriteError("\nPlease enter a number: ");
                 }
             }
             return input;
@@ -46,7 +46,7 @@ namespace InputClassLibrary
 
             while (sel < 0 || sel > maxRange)
             {
-                Input.WriteRed("\nPlease enter within given range: ");
+                Input.WriteError("\nPlease enter within given range: ");
                 sel = Input.GetInt();
             }
             return sel;
@@ -63,11 +63,11 @@ namespace InputClassLibrary
                     if (char.IsLetter(input) && (input == 'y' || input == 'n'))
                         break;
                     else
-                        Input.WriteRed("\nPlease enter only \"y\" or \"n\": ");
+                        Input.WriteError("\nPlease enter only \"y\" or \"n\": ");
                 }
                 catch (Exception)
                 {
-                    Input.WriteRed("\nPlease enter only \"y\" or \"n\": ");
+                    Input.WriteError("\nPlease enter only \"y\" or \"n\": ");
                 }
             }
             return input;
@@ -82,7 +82,7 @@ namespace InputClassLibrary
                 if (intList.Contains(id))
                     break;
                 else
-                    Input.WriteRed("\nId did not match.");
+                    Input.WriteError("\nId did not match.");
             }
             return id;
         }
@@ -102,7 +102,7 @@ namespace InputClassLibrary
         public static void WriteRed(string text)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(text);
+            Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         public static void WriteYellow(string text)
@@ -128,6 +128,12 @@ namespace InputClassLibrary
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.Gray;
-        }     
+        }
+        public static void WriteError(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
     }
 }

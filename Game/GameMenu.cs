@@ -2,14 +2,16 @@
 using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.ControllersLibrary;
+using KYHProject.Enums;
+using KYHProject.Models;
 
 namespace GameApp
 {
     public class GameMenu
     {        
-        private IGameController _gameController;
-        public GameMenu(GameController gameController)
-        {     
+        private IGameController _gameController;        
+        public GameMenu(IGameController gameController)
+        {
             _gameController = gameController;
         }
         public void ShowGameMenu()
