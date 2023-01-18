@@ -3,6 +3,9 @@ using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.Models;
 using KYHProject.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace KYHProject.ControllersLibrary
 {
@@ -17,10 +20,15 @@ namespace KYHProject.ControllersLibrary
         }
         public void Create()
         {
+            Console.Clear();
+
             var newCalculation = new CalculationResult();
             newCalculation.CreatedOn = DateTime.Now;
 
-            SetCalculationStrategy(newCalculation);
+            var sel = ShowCalculationStrategies();
+            if (sel == 0) return;
+
+            SetCalculationStrategy(newCalculation, sel);
 
             Console.Write("\nEnter number 1: ");
             newCalculation.a = Input.GetDecimal();
@@ -43,25 +51,34 @@ namespace KYHProject.ControllersLibrary
         }
         public void Show()
         {
-            var calList = _dbContext.CalculationResults.ToList();
-            var table = new ConsoleTable(
-                "Id",
-                "Value a",
-                "Operator",
-                "Value b",
-                "Result");
+            Console.Clear();
+            Console.WriteLine("\nPrevious Calculations");
+            var calculationsList = GetList();
+            if (calculationsList == null)
+                return;
 
-            foreach (var c in calList)
+            var table = new ConsoleTable(
+                    "Id",
+                    "Value a",
+                    "Operator",
+                    "Value b",
+                    "Result");
+
+            foreach (var c in calculationsList)
                 table.AddRow(c.Id,
                     c.a,
                     c.Operator,
                     c.b,
                     c.Result);
 
-            Console.WriteLine(table);
+            Console.WriteLine(table);            
         }
         public void Update()
         {
+            var calculationsList = GetList();
+            if (calculationsList == null)
+                return;
+
             Show();
 
             var idList = _dbContext.
@@ -73,7 +90,10 @@ namespace KYHProject.ControllersLibrary
             var calToUpdate = _dbContext.CalculationResults.
                 First(c => c.Id == calToUpdateId);
 
-            SetCalculationStrategy(calToUpdate);
+            var sel = ShowCalculationStrategies();
+            if (sel == 0) return;
+
+            SetCalculationStrategy(calToUpdate, sel);
 
             Console.Write("\nEnter number 1: ");
             calToUpdate.a = Input.GetDecimal();
@@ -96,6 +116,10 @@ namespace KYHProject.ControllersLibrary
         }
         public void Delete()
         {
+            var calculationsList = GetList();
+            if (calculationsList == null)
+                return;
+
             Show();
 
             var idList = _dbContext.
@@ -113,19 +137,8 @@ namespace KYHProject.ControllersLibrary
             Input.WriteRed("\nSucessfully deleted the result!");
             Input.PressAnyKey();
         }
-        private void SetCalculationStrategy(CalculationResult forCalculation)
+        private void SetCalculationStrategy(CalculationResult forCalculation, int sel)
         {
-            Console.WriteLine("\nChoose calculation opretaor\n");
-
-            Console.WriteLine("1: + Addition");
-            Console.WriteLine("2: - Subtraction");
-            Console.WriteLine("3: * Multiplication");
-            Console.WriteLine("4: / Division");
-            Console.WriteLine("5: % Modulus");
-            Console.WriteLine("0: Exit");
-
-            var sel = Input.GetSelFromRange(5);
-
             switch (sel)
             {
                 case 1:
@@ -156,6 +169,33 @@ namespace KYHProject.ControllersLibrary
                 default:
                     break;
             }
+        }
+        public int ShowCalculationStrategies()
+        {
+            Console.WriteLine("\nChoose calculation opretaor\n");
+
+            Console.WriteLine("1: + Addition");
+            Console.WriteLine("2: - Subtraction");
+            Console.WriteLine("3: * Multiplication");
+            Console.WriteLine("4: / Division");
+            Console.WriteLine("5: % Modulus");
+            Console.WriteLine("0: Exit");
+
+            return Input.GetSelFromRange(5);            
+        }
+        private List<CalculationResult> GetList()
+        {
+            var calculationsList = _dbContext.
+                CalculationResults.
+                ToList();
+            
+            if (calculationsList.Count() == 0)
+            {
+                Input.WriteYellow("\nThere is no record to show.");
+                return null;
+            }
+
+            return calculationsList;
         }
     }
 }

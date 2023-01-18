@@ -16,18 +16,5 @@ namespace KYHProject
 
             return Input.GetSelFromRange(3);
         }
-
-        public static int GameMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("\nRock Paper Scissor\n");
-
-            Console.WriteLine("1. Play the Game");
-            Console.WriteLine("2. Show previous statistics");
-            Console.WriteLine("0. Go to Main Menu");
-
-            return Input.GetSelFromRange(2);
-        }
-
     }
 }

@@ -20,6 +20,8 @@ namespace KYHProject.ControllersLibrary
         }
         public void Create()
         {
+            Console.Clear();
+
             _shape = new ShapeResult();
             GetInputValues();
             _shapeStrategy.SetStrategy(_shape);
@@ -28,22 +30,25 @@ namespace KYHProject.ControllersLibrary
             _dbContext.ShapeResults.Add(_shape);
             _dbContext.SaveChanges();
 
-            Input.WriteYellow($"\nArea = {_shape.Area}cm2");
-            Input.WriteYellow($"\nPerimeter = {_shape.Perimeter}cm2");
+            Input.WriteYellow($"\n{_shape.Type} Area = {_shape.Area}cm2");
+            Input.WriteYellow($"\n{_shape.Type} Perimeter = {_shape.Perimeter}cm");
 
             Input.PressAnyKey();
         }
         public void Show()
         {
-            var shapesList = _dbContext.ShapeResults.
-                ToList();
+            Console.Clear();
+            Console.WriteLine("\nPrevious Shape Calculations");
+            var shapesList = GetList();
+            if (shapesList == null)
+                return;
 
             var table = new ConsoleTable(
                 "Shape ID",
                 "Date",
                 "Type",
                 "Area (cm2)",
-                "Perimeter (cm2)");
+                "Perimeter (cm)");
             foreach (var s in shapesList)
             {
                 table.AddRow(
@@ -58,6 +63,10 @@ namespace KYHProject.ControllersLibrary
         }
         public void Update()
         {
+            var shapesList = GetList();
+            if (shapesList == null)
+                return;
+
             Show();
 
             var idList = _dbContext.
@@ -76,13 +85,17 @@ namespace KYHProject.ControllersLibrary
 
             _dbContext.SaveChanges();
 
-            Input.WriteYellow($"\nNew Area = {_shape.Area}cm2");
-            Input.WriteYellow($"\nNew Perimeter = {_shape.Perimeter}cm2");
+            Input.WriteYellow($"\nNew {_shape.Type} Area = {_shape.Area}cm2");
+            Input.WriteYellow($"\nNew {_shape.Type} Perimeter = {_shape.Perimeter}cm");
             Input.WriteGreen("\nSuccesfully updated the choosen Shape!");
             Input.PressAnyKey();
         }
         public void Delete()
         {
+            var shapesList = GetList();
+            if (shapesList == null)
+                return;
+
             Show();
 
             var idList = _dbContext.
@@ -134,6 +147,20 @@ namespace KYHProject.ControllersLibrary
                 Console.Write("\nEnter value of side (c) in cm: ");
                 _shape.ValueC = Input.GetDecimal();
             }
-        }      
+        }
+        private List<ShapeResult> GetList()
+        {
+            var list = _dbContext.
+                ShapeResults.
+                ToList();
+
+            if (list.Count() == 0)
+            {
+                Input.WriteYellow("\nThere is no record to show.");
+                return null;
+            }
+
+            return list;
+        }
     }
 }

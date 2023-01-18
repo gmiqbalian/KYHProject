@@ -1,4 +1,7 @@
-﻿namespace KYHProject.ControllersLibrary
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+namespace KYHProject.ControllersLibrary
 {
     public interface IController
     {
