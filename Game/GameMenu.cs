@@ -17,7 +17,8 @@ namespace GameApp
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("\nRock Paper Scissor\n");
+                Input.WriteMagenta("\nRock Paper Scissor");
+                Console.WriteLine("---------------------");
 
                 Console.WriteLine("1. Play the Game");
                 Console.WriteLine("0. Main Menu");

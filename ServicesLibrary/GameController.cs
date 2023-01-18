@@ -19,6 +19,7 @@ namespace KYHProject.ControllersLibrary
         {
             while (true)
             {
+                Console.Clear();
                 var newGame = new GameResult();
                 newGame.PlayedOn = DateTime.Now;
 

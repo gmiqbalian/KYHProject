@@ -1,4 +1,6 @@
-﻿namespace InputClassLibrary
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace InputClassLibrary
 {
     public static class Input
     {
@@ -15,7 +17,7 @@
                 }
                 catch (FormatException)
                 {
-                    Console.Write("\nPlease enter a number: ");
+                    Input.WriteRed("\nPlease enter a number: ");
                 }
             }
             return input;
@@ -32,7 +34,7 @@
                 }
                 catch (FormatException)
                 {
-                    Console.Write("\nPlease enter a number: ");
+                    Input.WriteRed("\nPlease enter a number: ");
                 }
             }
             return input;
@@ -44,7 +46,7 @@
 
             while (sel < 0 || sel > maxRange)
             {
-                Console.Write("\nPlease enter within given range: ");
+                Input.WriteRed("\nPlease enter within given range: ");
                 sel = Input.GetInt();
             }
             return sel;
@@ -61,40 +63,15 @@
                     if (char.IsLetter(input) && (input == 'y' || input == 'n'))
                         break;
                     else
-                        Console.Write("\nPlease enter only \"y\" or \"n\": ");
+                        Input.WriteRed("\nPlease enter only \"y\" or \"n\": ");
                 }
                 catch (Exception)
                 {
-                    Console.Write("\nPlease enter only \"y\" or \"n\": ");
+                    Input.WriteRed("\nPlease enter only \"y\" or \"n\": ");
                 }
             }
             return input;
-        }
-        public static void PressAnyKey()
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.ReadKey();
-        }
-        public static void WriteGreen(string input)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(input);
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
-        public static void WriteRed(string input)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(input);
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
-        public static void WriteYellow(string input)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(input);
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
+        }        
         public static int CheckId(List<int> intList)
         {
             int id = 0;
@@ -105,9 +82,52 @@
                 if (intList.Contains(id))
                     break;
                 else
-                    Console.Write("\nId did not match.");
+                    Input.WriteRed("\nId did not match.");
             }
             return id;
         }
+        public static void PressAnyKey()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadKey();
+        }
+        public static void WriteGreen(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteRed(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteYellow(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteWhite(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteCyan(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public static void WriteMagenta(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }     
     }
 }

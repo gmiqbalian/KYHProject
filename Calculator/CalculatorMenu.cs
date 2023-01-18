@@ -16,7 +16,8 @@ namespace Calculator
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("\nCalculation\n");
+                Input.WriteCyan("\nCalculation");
+                Console.WriteLine("------------");
 
                 Console.WriteLine("1. Make a calculation");
                 Console.WriteLine("2. Edit previous calculation");

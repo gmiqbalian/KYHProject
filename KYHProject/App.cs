@@ -19,14 +19,14 @@ namespace KYHProject
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("\nMain Menu\n");
-
-                Console.WriteLine("1. Shapes");
-                Console.WriteLine("2. Calculation");
-                Console.WriteLine("3. Game");
+                Console.Clear();                
+                Console.WriteLine("\nMain Menu");
+                Console.WriteLine("-----------");
+                Input.WriteGreen("1. Shapes");
+                Input.WriteCyan("2. Calculation");
+                Input.WriteMagenta("3. Game");
                 Console.WriteLine("0. Exit");
-                                
+                
                 var mainSel = Input.GetSelFromRange(3);
                 if (mainSel == 0) return;
 

@@ -5,7 +5,7 @@ using KYHProject.ControllersLibrary;
 
 namespace ShapeApp
 {
-    public class ShapeMenu : IShapeMenu
+    public class ShapeMenu
     {        
         private readonly IController _shapeController;
         public ShapeMenu(IController shapeController)
@@ -17,7 +17,8 @@ namespace ShapeApp
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("\nShapes\n");
+                Input.WriteGreen("\nShapes");
+                Console.WriteLine("--------");
 
                 Console.WriteLine("1. Calculate Area and Circumference of a Shape");
                 Console.WriteLine("2. Edit current Shape calculations");
