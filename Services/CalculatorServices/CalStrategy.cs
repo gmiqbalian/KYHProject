@@ -1,4 +1,6 @@
-﻿namespace KYHProject.Services
+﻿using KYHProject.Models;
+
+namespace KYHProject.Services
 {
     public class CalStrategy
     {
@@ -10,6 +12,6 @@
         public decimal ExecuteStrategy(decimal a, decimal b)
         {
             return _calStrategy.Execute(a, b);
-        }
+        }       
     }
 }
