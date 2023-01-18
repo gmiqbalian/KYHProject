@@ -1,6 +1,8 @@
 ﻿using Calculator;
+using ControllersLibrary;
 using DBContextLibrary.Data;
 using GameApp;
+using KYHProject.ControllersLibrary;
 using ShapeApp;
 
 namespace KYHProject
@@ -11,6 +13,8 @@ namespace KYHProject
         {
             var builder = new Builder();
             var dbContext = builder.BuildApp();
+            ControllerFactory mainController = new ControllerFactory(dbContext);
+            IController controller = null;
 
             while (true)
             {
@@ -20,11 +24,13 @@ namespace KYHProject
                 switch (mainSel)
                 {
                     case 1:
-                        var shapeApp = new ShapesMenu(dbContext);
+                        controller = mainController.GetController("shape");
+                        var shapeApp = new ShapesMenu(dbContext, controller);
                         shapeApp.ShowShapeMenu();
                         break;
                     case 2:
-                        var calculatorApp = new CalculatorMenu(dbContext);
+                        controller = mainController.GetController("calculator");
+                        var calculatorApp = new CalculatorMenu(dbContext, controller);
                         calculatorApp.ShowCalulatorMenu();
                         break;
                     case 3:

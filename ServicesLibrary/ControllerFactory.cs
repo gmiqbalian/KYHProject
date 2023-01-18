@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ControllersLibrary
 {
-    public class Controller
+    public class ControllerFactory
     {
         private IController _controller;
-        private readonly AppDbContext _dbContext;
-        public Controller(AppDbContext dbContext)
+        private AppDbContext _dbContext;
+        public ControllerFactory(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }

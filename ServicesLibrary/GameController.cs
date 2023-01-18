@@ -1,11 +1,12 @@
-﻿using DBContextLibrary.Data;
+﻿using ControllersLibrary;
+using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.Enums;
 using KYHProject.Models;
 
 namespace KYHProject.ControllersLibrary
 {
-    public class GameController
+    public class GameController : IGameController
     {
         private AppDbContext _dbContext;
         private List<string> _choices;

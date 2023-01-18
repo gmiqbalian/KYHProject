@@ -6,8 +6,7 @@ namespace ServicesLibrary.ShapeServices
 {
     public class ShapeStrategy
     {
-        private IShapeStrategy _strategy;
-        
+        private IShapeStrategy _strategy;        
         public void SetStrategy(ShapeResult _forShape)
         {
             switch (_forShape.Type)

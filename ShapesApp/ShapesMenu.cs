@@ -8,10 +8,10 @@ namespace ShapeApp
     {
         private readonly AppDbContext _dbContext;
         private readonly IController _shapeController;
-        public ShapesMenu(AppDbContext dbContext)
+        public ShapesMenu(AppDbContext dbContext, IController shapeController)
         {
             _dbContext = dbContext;
-            _shapeController = new ShapeController(_dbContext);
+            _shapeController = shapeController;
         }
         public void ShowShapeMenu()
         {

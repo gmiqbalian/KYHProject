@@ -8,9 +8,9 @@ namespace Calculator
     {
         private readonly AppDbContext _dbContext;
         private readonly IController _calculatorController;
-        public CalculatorMenu(AppDbContext dbContext)
+        public CalculatorMenu(AppDbContext dbContext, IController calculatorController)
         {
-            _calculatorController = new CalculatorController(dbContext);
+            _calculatorController = calculatorController;
         }
         public void ShowCalulatorMenu()
         {

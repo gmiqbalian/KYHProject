@@ -1,4 +1,5 @@
-﻿using DBContextLibrary.Data;
+﻿using ControllersLibrary;
+using DBContextLibrary.Data;
 using InputClassLibrary;
 using KYHProject.ControllersLibrary;
 
@@ -7,7 +8,7 @@ namespace GameApp
     public class GameMenu
     {
         private readonly AppDbContext _dbContext;
-        private GameController _gameController;
+        private IGameController _gameController;
         public GameMenu(AppDbContext dbContext)
         {
             _dbContext = dbContext;
