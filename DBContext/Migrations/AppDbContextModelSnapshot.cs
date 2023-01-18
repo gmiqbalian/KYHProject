@@ -82,7 +82,7 @@ namespace DBContextLibrary.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Area")
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Base")
                         .HasColumnType("decimal(18,2)");
@@ -94,7 +94,7 @@ namespace DBContextLibrary.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Perimeter")
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
