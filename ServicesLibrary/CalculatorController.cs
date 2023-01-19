@@ -4,6 +4,7 @@ using InputClassLibrary;
 using KYHProject.Models;
 using KYHProject.Services;
 using Microsoft.EntityFrameworkCore;
+using ServicesLibrary.CalculatorServices;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 
@@ -16,7 +17,7 @@ namespace KYHProject.ControllersLibrary
         public CalculatorController(AppDbContext dbContext, CalculatorServices calServices)
         {
             _dbContext = dbContext;
-            _calServices = calServices;            
+            _calServices = calServices;
         }
         public void Create()
         {
@@ -42,7 +43,7 @@ namespace KYHProject.ControllersLibrary
             var text = ($"\nYour result is {newCalculation.a} " +
                 $"{newCalculation.Operator} " +
                 $"{newCalculation.b} " +
-                $"= {newCalculation.Result}");
+                $"= {newCalculation.Result.ToString("##.##")}");
             Input.WriteYellow(text);
 
             _dbContext.CalculationResults.Add(newCalculation);
@@ -166,12 +167,17 @@ namespace KYHProject.ControllersLibrary
                         SetStrategy(new ModulusStrategy());
                     forCalculation.Operator = '%';
                     break;
+                case 6:
+                    _calServices.SetStrategy(new SquareRootStrategy());
+                    forCalculation.Operator = '√';
+                    break;
                 default:
                     break;
             }
         }
-        public int ShowCalculationStrategies()
+        private int ShowCalculationStrategies()
         {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.WriteLine("\nChoose calculation opretaor\n");
 
             Console.WriteLine("1: + Addition");
@@ -179,9 +185,10 @@ namespace KYHProject.ControllersLibrary
             Console.WriteLine("3: * Multiplication");
             Console.WriteLine("4: / Division");
             Console.WriteLine("5: % Modulus");
-            Console.WriteLine("0: Exit");
+            Console.WriteLine("6. \u221A Square Root");
+            Console.WriteLine("\n0: Exit");
 
-            return Input.GetSelFromRange(5);            
+            return Input.GetSelFromRange(6);            
         }
         private List<CalculationResult> GetList()
         {

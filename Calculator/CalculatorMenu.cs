@@ -24,7 +24,7 @@ namespace Calculator
                 Console.WriteLine("3. Show previous calculations");
                 Console.WriteLine("4. Delete previous calculation");
                 Console.WriteLine("0. Go to Main Menu");
-
+                
                 var sel = Input.GetSelFromRange(4);
                 if (sel == 0) break;
 

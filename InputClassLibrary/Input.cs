@@ -34,7 +34,7 @@ namespace InputClassLibrary
                 }
                 catch (FormatException)
                 {
-                    Input.WriteRed("\nPlease enter a number: ");
+                    Input.WriteError("\nPlease enter a number: ");
                 }
             }
             return input;
@@ -131,7 +131,7 @@ namespace InputClassLibrary
         }
         public static void WriteError(string text)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(text);
             Console.ForegroundColor = ConsoleColor.Gray;
         }

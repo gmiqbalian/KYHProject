@@ -35,7 +35,7 @@ namespace KYHProject
 
                 switch (mainSel)
                 {
-                    case 1:                        
+                    case 1:        
                         menuFacotry.GetMenu("shape");                        
                         break;
                     case 2:

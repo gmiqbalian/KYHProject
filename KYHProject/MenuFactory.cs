@@ -3,13 +3,7 @@ using ControllersLibrary;
 using DBContextLibrary.Data;
 using GameApp;
 using KYHProject.ControllersLibrary;
-using Microsoft.EntityFrameworkCore;
 using ShapeApp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KYHProject
 {
@@ -17,7 +11,7 @@ namespace KYHProject
     {
         private readonly AppDbContext _dbContext;
         private readonly ControllerFactory _controller;                
-        public MenuFactory(AppDbContext dbContext,ControllerFactory controller)
+        public MenuFactory(AppDbContext dbContext, ControllerFactory controller)
         {
             _dbContext = dbContext;
             _controller = controller;
@@ -44,6 +38,6 @@ namespace KYHProject
                 default:
                     break;
             }
-        }
+        }        
     }
 }

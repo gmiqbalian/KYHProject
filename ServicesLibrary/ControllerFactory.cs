@@ -13,7 +13,7 @@ namespace ControllersLibrary
     public class ControllerFactory
     {
         private IController _controller;
-        private AppDbContext _dbContext;        
+        private AppDbContext _dbContext;
         public ControllerFactory(AppDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -24,9 +24,9 @@ namespace ControllersLibrary
             {
                 case "shape":
                     _controller = new ShapeController
-                        (_dbContext, new ShapeServices());
+                        (_dbContext, new ShapeServices());                    
                     break;
-                case "calculator":                    
+                case "calculator":
                     _controller = new CalculatorController
                         (_dbContext, new CalculatorServices());
                     break;
